@@ -50,11 +50,12 @@ body {
     padding: 20px;
     width: 500px;
     height: fit-content;
+    /* height: 300px; */
     text-align: center;
   }
 
   .nav {
-    display: block;
+    display: none;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -66,6 +67,7 @@ body {
     color: #fff;
     font-size: 18px;
     border: 0;
+    z-index: 10;
     &:hover {
       transition: all 0.2s ease;
       opacity: 0.8;
@@ -76,6 +78,10 @@ body {
 
     &.next {
       left: 100%;
+    }
+
+    &.nav-active {
+      display: block;
     }
   }
 }
