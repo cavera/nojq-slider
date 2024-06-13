@@ -8,7 +8,8 @@ function createSlider(options = {}) {
     autoplay: false,
     autoplayInterval: 3000,
     speed: 300,
-    infinite: true,
+    infinite: false,
+    visibleSlides: 1,
   };
 
   const sliderOptions = {
@@ -16,12 +17,12 @@ function createSlider(options = {}) {
     ...options,
   };
 
-  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite } = sliderOptions;
+  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite, visibleSlides } = sliderOptions;
 
   const sliderWrapper = document.querySelector(wrapper);
   const sliderContainer = sliderWrapper.querySelector(container);
   const sliderTrack = sliderContainer.querySelector(track);
-  const sliderItems = sliderTrack.children;
+  const sliderItems = [...sliderTrack.children];
 
   const navNext = sliderWrapper.querySelector(nextBtn);
   const navPrev = sliderWrapper.querySelector(prevBtn);
@@ -30,16 +31,9 @@ function createSlider(options = {}) {
     console.error("Slider elements not found");
     return;
   }
-  // get max height
-  let maxHeight = 0;
-  [...sliderItems].forEach((item, index) => {
-    item.setAttribute("data-index", index);
-    if (item.offsetHeight > maxHeight) {
-      maxHeight = item.offsetHeight;
-    }
-  });
 
   let currentSlide = 0;
+  let maxHeight = 0;
 
   const showNext = () => navNext.classList.add("nav-active");
   const showPrev = () => navPrev.classList.add("nav-active");
@@ -50,10 +44,7 @@ function createSlider(options = {}) {
   let slideWidth = sliderItems[0].getBoundingClientRect().width;
   let slideHeight = sliderItems[currentSlide].getBoundingClientRect().height;
 
-  sliderWrapper.style.width = `${slideWidth}px`;
-  sliderContainer.style.width = `${slideWidth}px`;
-
-  updateHeight(slideHeight);
+  updateDOMState();
 
   sliderWrapper.classList.add("slider-active");
 
@@ -63,7 +54,6 @@ function createSlider(options = {}) {
     showNext();
     showPrev();
   }
-  console.log("current slide first time:", currentSlide);
 
   let slideStart = 0;
   function moveSlide(direction) {
@@ -127,10 +117,9 @@ function createSlider(options = {}) {
     let updSliderItems = sliderTrack.children;
     currentSlide = parseInt(currentSlide);
 
-    // updating height
     let currentSlideItem = sliderTrack.querySelector(`[data-index="${currentSlide}"]`);
     slideHeight = currentSlideItem.getBoundingClientRect().height;
-    updateHeight(slideHeight);
+    updateDOMState();
 
     movement.addEventListener("finish", () => {
       if (infinite) {
@@ -147,13 +136,6 @@ function createSlider(options = {}) {
     });
   }
 
-  function updateHeight(height) {
-    sliderContainer.style.height = `${height}px`;
-    sliderTrack.style.height = `${height}px`;
-    // temporal
-    console.log("current slide in updateHeight: ", currentSlide);
-    checkNav();
-  }
   function checkNav() {
     if (!infinite) {
       if (currentSlide <= 0) {
@@ -169,6 +151,22 @@ function createSlider(options = {}) {
     }
   }
 
+  function updateDOMState() {
+    sliderItems.forEach((item, index) => {
+      item.setAttribute("data-index", index);
+      if (item.offsetHeight > maxHeight) {
+        maxHeight = item.offsetHeight;
+      }
+    });
+
+    sliderWrapper.style.width = `${slideWidth}px`;
+    sliderContainer.style.width = `${slideWidth}px`;
+    sliderContainer.style.height = `${slideHeight}px`;
+    sliderTrack.style.height = `${slideHeight}px`;
+
+    checkNav();
+  }
+
   function eventHandler(fn) {
     let isExecuting = false;
     return () => {
@@ -181,7 +179,7 @@ function createSlider(options = {}) {
       }
     };
   }
-
+  updateDOMState();
   const moveLeft = eventHandler(() => moveSlide("prev"));
   const moveRight = eventHandler(() => moveSlide("next"));
 
@@ -189,6 +187,7 @@ function createSlider(options = {}) {
   navNext.addEventListener("click", () => moveRight());
 
   if (autoplay) setInterval(() => moveRight(), autoplayInterval);
+  window.addEventListener("resize", () => updateDOMState());
 }
 
-createSlider({ infinite: true });
+createSlider({ infinite: false });
