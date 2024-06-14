@@ -206,4 +206,5 @@ function createSlider(options = {}) {
 createSlider({
   infinite: true,
   autoplay: true,
+  visibleSlides: 3,
 });
