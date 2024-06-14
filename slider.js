@@ -10,6 +10,7 @@ function createSlider(options = {}) {
     speed: 300,
     infinite: false,
     visibleSlides: 1,
+    adaptiveHeigh: true,
   };
 
   const sliderOptions = {
@@ -17,36 +18,34 @@ function createSlider(options = {}) {
     ...options,
   };
 
-  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite, visibleSlides } = sliderOptions;
+  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite, visibleSlides, adaptiveHeigh } = sliderOptions;
 
   const sliderWrapper = document.querySelector(wrapper);
   const sliderContainer = sliderWrapper.querySelector(container);
   const sliderTrack = sliderContainer.querySelector(track);
   const sliderItems = [...sliderTrack.children];
 
-  const navNext = sliderWrapper.querySelector(nextBtn);
-  const navPrev = sliderWrapper.querySelector(prevBtn);
-
   if (!sliderWrapper || !sliderContainer || !sliderTrack || sliderItems.length === 0) {
     console.error("Slider elements not found");
     return;
   }
 
-  let currentSlide = 0;
-  let maxHeight = 0;
+  const navNext = sliderWrapper.querySelector(nextBtn);
+  const navPrev = sliderWrapper.querySelector(prevBtn);
 
   const showNext = () => navNext.classList.add("nav-active");
   const showPrev = () => navPrev.classList.add("nav-active");
   const hideNext = () => navNext.classList.remove("nav-active");
   const hidePrev = () => navPrev.classList.remove("nav-active");
 
-  const slideCount = sliderItems.length;
-  let slideWidth = sliderItems[0].getBoundingClientRect().width;
-  let slideHeight = sliderItems[currentSlide].getBoundingClientRect().height;
+  let currentSlide = 0;
+  let maxHeight = 0;
+  let slideCount;
+  let slideWidth;
+  let slideHeight;
+  let slideStart = 0;
 
   updateDOMState();
-
-  sliderWrapper.classList.add("slider-active");
 
   if (infinite) {
     sliderTrack.style.marginLeft = `-${slideWidth}px`;
@@ -55,7 +54,8 @@ function createSlider(options = {}) {
     showPrev();
   }
 
-  let slideStart = 0;
+  function initSlides() {}
+
   function moveSlide(direction) {
     let isPrev = direction === "prev";
     let slideDistance;
@@ -111,6 +111,7 @@ function createSlider(options = {}) {
       duration: speed,
       iterations: 1,
       fill: "forwards",
+      ease: "ease-in-out",
     };
 
     const movement = sliderTrack.animate(keyframes, animationOptions);
@@ -141,7 +142,7 @@ function createSlider(options = {}) {
       if (currentSlide <= 0) {
         hidePrev();
         showNext();
-      } else if (currentSlide >= slideCount - 1) {
+      } else if (currentSlide >= slideCount - visibleSlides) {
         showPrev();
         hideNext();
       } else {
@@ -152,17 +153,29 @@ function createSlider(options = {}) {
   }
 
   function updateDOMState() {
+    slideCount = sliderItems.length;
+    slideWidth = sliderContainer.getBoundingClientRect().width / visibleSlides;
+
     sliderItems.forEach((item, index) => {
       item.setAttribute("data-index", index);
+      item.style.width = `${slideWidth}px`;
       if (item.offsetHeight > maxHeight) {
         maxHeight = item.offsetHeight;
       }
     });
 
-    sliderWrapper.style.width = `${slideWidth}px`;
-    sliderContainer.style.width = `${slideWidth}px`;
+    if (!adaptiveHeigh) {
+      slideHeight = maxHeight;
+    } else {
+      slideHeight = sliderItems[currentSlide].getBoundingClientRect().height;
+    }
+
     sliderContainer.style.height = `${slideHeight}px`;
     sliderTrack.style.height = `${slideHeight}px`;
+
+    if (infinite) {
+      sliderTrack.style.marginLeft = `-${slideWidth}px`;
+    }
 
     checkNav();
   }
@@ -179,7 +192,7 @@ function createSlider(options = {}) {
       }
     };
   }
-  updateDOMState();
+
   const moveLeft = eventHandler(() => moveSlide("prev"));
   const moveRight = eventHandler(() => moveSlide("next"));
 
@@ -190,4 +203,6 @@ function createSlider(options = {}) {
   window.addEventListener("resize", () => updateDOMState());
 }
 
-createSlider({ infinite: false });
+createSlider({
+  infinite: false,
+});
