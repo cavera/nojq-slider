@@ -30,6 +30,9 @@ function createSlider(options = {}) {
     return;
   }
 
+  visibleSlides = Math.max(1, Math.min(visibleSlides, sliderItems.length));
+  adaptiveHeigh = visibleSlides <= 1;
+
   const navNext = sliderWrapper.querySelector(nextBtn);
   const navPrev = sliderWrapper.querySelector(prevBtn);
 
@@ -40,12 +43,10 @@ function createSlider(options = {}) {
 
   let currentSlide = 0;
   let maxHeight = 0;
-  let slideCount;
-  let slideWidth;
-  let slideHeight;
+  let slideCount, slideWidth, slideHeight;
   let slideStart = 0;
 
-  updateDOMState();
+  updateDOM();
 
   if (infinite) {
     sliderTrack.style.marginLeft = `-${slideWidth}px`;
@@ -57,10 +58,10 @@ function createSlider(options = {}) {
   function initSlides() {}
 
   function moveSlide(direction) {
+    let prevSlide = currentSlide;
     let isPrev = direction === "prev";
     let slideDistance;
 
-    let prevSlide = currentSlide;
     if (isPrev) {
       currentSlide--;
     } else {
@@ -91,11 +92,6 @@ function createSlider(options = {}) {
 
       let slideEnd = slideWidth * currentSlide;
       slideDistance = -slideEnd;
-
-      // console.log("currentSlide", currentSlide);
-
-      // console.log(`${prevSlide} | ${currentSlide}`);
-      // console.log(`${slideStart} -> ${slideDistance} from slideEnd ${slideEnd}`);
     }
 
     const keyframes = [
@@ -120,7 +116,7 @@ function createSlider(options = {}) {
 
     let currentSlideItem = sliderTrack.querySelector(`[data-index="${currentSlide}"]`);
     slideHeight = currentSlideItem.getBoundingClientRect().height;
-    updateDOMState();
+    updateDOM();
 
     movement.addEventListener("finish", () => {
       if (infinite) {
@@ -152,22 +148,20 @@ function createSlider(options = {}) {
     }
   }
 
-  function updateDOMState() {
+  function updateDOM() {
     slideCount = sliderItems.length;
-    slideWidth = sliderContainer.getBoundingClientRect().width / visibleSlides;
+    slideWidth = sliderContainer.clientWidth / visibleSlides;
 
-    sliderItems.forEach((item, index) => {
-      item.setAttribute("data-index", index);
+    sliderItems.forEach((item, i) => {
+      item.setAttribute("data-index", i);
       item.style.width = `${slideWidth}px`;
-      if (item.offsetHeight > maxHeight) {
-        maxHeight = item.offsetHeight;
-      }
+      maxHeight = Math.max(maxHeight, item.offsetHeight);
     });
 
     if (!adaptiveHeigh) {
       slideHeight = maxHeight;
     } else {
-      slideHeight = sliderItems[currentSlide].getBoundingClientRect().height;
+      slideHeight = sliderItems[currentSlide].clientHeight;
     }
 
     sliderContainer.style.height = `${slideHeight}px`;
@@ -200,7 +194,7 @@ function createSlider(options = {}) {
   navNext.addEventListener("click", () => moveRight());
 
   if (autoplay) setInterval(() => moveRight(), autoplayInterval);
-  window.addEventListener("resize", () => updateDOMState());
+  window.addEventListener("resize", () => updateDOM());
 }
 
 createSlider({
