@@ -5,79 +5,132 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
-    <title>slider</title>
+    <title>No jQ Slider</title>
     <link
       rel="stylesheet"
-      href="styles.css" />
+      href="./src/styles/slider-styles.css" />
+    <link
+      rel="stylesheet"
+      href="./styles.css" />
   </head>
-  <body class="debug">
-    <div class="control">
-      <div class="slider-wrapper">
-        <button class="nav next">next</button>
-        <button class="nav prev">prev</button>
-        <div class="slides-container">
-          <div class="track">
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 1</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem aut qui officiis ipsam voluptatem? Atque suscipit soluta, fuga iste magni ipsum expedita quia, quibusdam eos facilis veritatis ad aspernatur corporis!</p>
+  <body>
+    <div class="wrapper">
+      <h1>No jQ Slider</h1>
+      <p>A js slider with no dependencies and little extra job for the browser.</p>
+      <h2>Examples</h2>
+      <h3>Simple usage</h3>
+      <code>createSlider({ wrapper: "#simple .slider-wrapper", });</code>
+
+      <div id="simple">
+        <div class="slider-wrapper">
+          <button class="nav next">🡪</button>
+          <button class="nav prev">🡰</button>
+          <div class="slides-container">
+            <div class="track">
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 1</h2>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem aut qui officiis ipsam voluptatem? Atque suscipit soluta, fuga iste magni ipsum expedita quia, quibusdam eos facilis veritatis ad aspernatur corporis!</p>
+                </div>
+              </div>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 2</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
+              </div>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 3</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
+              </div>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 4</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
             </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 2</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+          </div>
+        </div>
+      </div>
+      <h3>visibleSlides, infinite nav and autoplay</h3>
+      <code>createSlider({ wrapper: "#infinite-3-slides .slider-wrapper", infinite: true, autoplay: true, visibleSlides: 3, });</code>
+      <div id="infinite-3-slides">
+        <div class="slider-wrapper">
+          <button class="nav next">🡪</button>
+          <button class="nav prev">🡰</button>
+          <div class="slides-container">
+            <div class="track">
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 1</h2>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem aut qui officiis ipsam voluptatem? Atque suscipit soluta, fuga iste magni ipsum expedita quia, quibusdam eos facilis veritatis ad aspernatur corporis!</p>
+                </div>
               </div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 3</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 2</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 4</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 3</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 5</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 4</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 6</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 5</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
-            </div>
-            <div class="slide">
-              <div class="slide-content">
-                <h2>SLIDE 7</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 6</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
+              </div>
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>SLIDE 7</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- 
-    <p>
-      inspired by
-      <a href="https://codepen.io/zuraizm/pen/DwZaqx?editors=1000">
-        Very Simple Slider
-      </a>
-    </p> -->
-
-    <script src="slider.js"></script>
+    <script src="./src/js/slider.js"></script>
+    <script>
+      createSlider({
+        wrapper: "#simple .slider-wrapper",
+        onChangeSlide: (current) => {
+          console.log(current);
+        },
+      });
+      createSlider({
+        wrapper: "#infinite-3-slides .slider-wrapper",
+        infinite: true,
+        autoplay: true,
+        visibleSlides: 3,
+      });
+    </script>
   </body>
 </html>

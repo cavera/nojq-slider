@@ -1,0 +1,28 @@
+/* debug */
+
+.control {
+  outline: 1px dashed rgba(47, 0, 255, 0.836);
+}
+
+.slider-wrapper {
+  outline: 1px dashed rgb(255, 238, 0);
+
+  .slides-container {
+    outline: 1px dashed lightblue;
+  }
+
+  .track {
+    outline: 1px dashed rgb(38, 26, 207);
+  }
+
+  .slide {
+    outline: 1px dashed rgba(0, 151, 144, 0.356);
+    .slide-content {
+      outline: 1px dashed rgba(4, 204, 194, 0.644);
+    }
+  }
+
+  .nav {
+    outline: 1px dashed rgba(255, 0, 234, 0.774);
+  }
+}

@@ -11,6 +11,7 @@ function createSlider(options = {}) {
     infinite: false,
     visibleSlides: 1,
     adaptiveHeigh: true,
+    onChangeSlide: () => {},
   };
 
   const sliderOptions = {
@@ -33,6 +34,7 @@ function createSlider(options = {}) {
   visibleSlides = Math.max(1, Math.min(visibleSlides, sliderItems.length));
   adaptiveHeigh = visibleSlides <= 1;
 
+  console.log(sliderWrapper);
   const navNext = sliderWrapper.querySelector(nextBtn);
   const navPrev = sliderWrapper.querySelector(prevBtn);
 
@@ -146,6 +148,7 @@ function createSlider(options = {}) {
         showPrev();
       }
     }
+    sliderOptions.onChangeSlide(sliderTrack.querySelector(`[data-index="${currentSlide}"]`));
   }
 
   function updateDOM() {
@@ -196,9 +199,3 @@ function createSlider(options = {}) {
   if (autoplay) setInterval(() => moveRight(), autoplayInterval);
   window.addEventListener("resize", () => updateDOM());
 }
-
-createSlider({
-  infinite: true,
-  autoplay: true,
-  visibleSlides: 3,
-});

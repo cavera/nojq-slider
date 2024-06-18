@@ -1,84 +1,30 @@
-html {
-  background: #000000;
-  color: #2a2a2a;
-}
-
 html,
 body {
   margin: 0;
-  padding: 0;
+  padding: 32px;
   font-family: "system-ui";
   height: 100dvh;
-  display: grid;
-  place-items: center;
-}
-
-/* basic styles */
-
-.control {
-  width: 100vw;
-}
-
-.slider-wrapper {
-  --nav-width: 40px;
-  padding: 0 var(--nav-width);
-  position: relative;
-  margin: 0 auto;
+  background-color: #e0dfdf;
   box-sizing: border-box;
-  width: 100%;
+}
 
+body {
   * {
     box-sizing: border-box;
   }
-
-  .slides-container {
-    overflow: hidden;
-    transition: all 0.3s;
-    width: 100%;
-  }
-
-  .track {
-    position: relative;
-    display: flex;
-  }
-
-  .slide {
-    flex-shrink: 0;
-    position: relative;
-    padding: 10px;
-    width: 100%;
-    height: fit-content;
-  }
-
-  .nav {
-    display: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0;
-    width: var(--nav-width);
-    height: 40px;
-    border: 0;
-    z-index: 10;
-
-    &.prev {
-      left: 0;
-    }
-
-    &.next {
-      right: 0;
-    }
-
-    &.nav-active {
-      display: block;
-    }
-  }
 }
 
-/* apperance */
+.wrapper {
+  margin: 0 auto;
+  max-width: 900px;
+}
 
-.control {
-  width: 70vw;
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 1em;
+  display: block;
 }
 
 .slider-wrapper {
@@ -95,11 +41,12 @@ body {
       text-align: center;
       border-radius: 10px;
       height: fit-content;
-      background: #ccc;
+      background: #ffffff;
       padding: 10px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
       * {
         margin: 0;
       }
@@ -117,6 +64,7 @@ body {
     color: #fff;
     font-size: 18px;
     z-index: 10;
+    border-radius: 50%;
 
     &:hover {
       opacity: 0.8;
@@ -130,36 +78,6 @@ body {
     }
 
     &.nav-active {
-    }
-  }
-}
-
-/* debug */
-.debug {
-  .control {
-    outline: 1px dashed rgba(47, 0, 255, 0.836);
-  }
-
-  .slider-wrapper {
-    outline: 1px dashed rgb(255, 238, 0);
-
-    .slides-container {
-      outline: 1px dashed lightblue;
-    }
-
-    .track {
-      outline: 1px dashed rgb(38, 26, 207);
-    }
-
-    .slide {
-      outline: 1px dashed rgba(0, 151, 144, 0.356);
-      .slide-content {
-        outline: 1px dashed rgba(4, 204, 194, 0.644);
-      }
-    }
-
-    .nav {
-      outline: 1px dashed rgba(255, 0, 234, 0.774);
     }
   }
 }
