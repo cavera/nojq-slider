@@ -8,10 +8,10 @@
     <title>slider</title>
     <link
       rel="stylesheet"
-      href="./slider-styles.css" />
-    <!-- <link
+      href="./styles/slider-styles.css" />
+    <link
       rel="stylesheet"
-      href="./debug.css" /> -->
+      href="./styles/debug.css" />
   </head>
   <body>
     <div class="control">
@@ -53,7 +53,7 @@
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
               </div>
             </div>
-            <div class="slide">
+            <!-- <div class="slide">
               <div class="slide-content">
                 <h2>SLIDE 6</h2>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
@@ -66,7 +66,7 @@
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur rem eveniet rerum ipsam ut, magnam cupiditate maxime praesentium expedita voluptate, sequi, laudantium voluptatum illo facere quisquam omnis odio soluta debitis.</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -81,15 +81,26 @@
       </a>
     </p>
 
-    <script src="slider.js"></script>
+    <script src="./js/slider.js"></script>
     <script>
       createSlider({
-        infinite: true,
-        autoplay: true,
-        visibleSlides: 3,
+        infinite: false,
+        autoplay: false,
+        visibleSlides: 7,
         // onChangeSlide: (current) => {
         //   console.log(current);
         // },
+        responsive: {
+          480: {
+            visibleSlides: 1,
+          },
+          640: {
+            visibleSlides: 2,
+          },
+          1024: {
+            visibleSlides: 3,
+          },
+        },
       });
     </script>
   </body>

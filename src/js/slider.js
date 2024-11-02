@@ -1,3 +1,4 @@
+let exposedMovement = null;
 function createSlider(options = {}) {
   const defaultOptions = {
     wrapper: ".slider-wrapper",
@@ -12,6 +13,7 @@ function createSlider(options = {}) {
     visibleSlides: 1,
     adaptiveHeigh: true,
     onChangeSlide: () => {},
+    responsive: {},
   };
 
   const sliderOptions = {
@@ -19,20 +21,37 @@ function createSlider(options = {}) {
     ...options,
   };
 
-  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite, visibleSlides, adaptiveHeigh } = sliderOptions;
+  let { wrapper, container, track, nextBtn, prevBtn, autoplay, autoplayInterval, speed, infinite, visibleSlides, adaptiveHeigh, responsive } = sliderOptions;
 
   const sliderWrapper = document.querySelector(wrapper);
   const sliderContainer = sliderWrapper.querySelector(container);
   const sliderTrack = sliderContainer.querySelector(track);
   const sliderItems = [...sliderTrack.children];
+  let movement = null;
 
   if (!sliderWrapper || !sliderContainer || !sliderTrack || sliderItems.length === 0) {
     console.error("Slider elements not found");
     return;
   }
 
-  visibleSlides = Math.max(1, Math.min(visibleSlides, sliderItems.length));
-  adaptiveHeigh = visibleSlides <= 1;
+  function checkResponsive() {
+    if (responsive) {
+      const breakpoints = Object.keys(responsive);
+
+      for (breakpoint of breakpoints) {
+        if (window.innerWidth <= breakpoint) {
+          visibleSlides = responsive[breakpoint].visibleSlides;
+          break;
+        } else {
+          visibleSlides = sliderOptions.visibleSlides;
+        }
+      }
+    }
+    visibleSlides = Math.max(1, Math.min(visibleSlides, sliderItems.length));
+    adaptiveHeigh = visibleSlides <= 1;
+  }
+
+  checkResponsive();
 
   console.log(sliderWrapper);
   const navNext = sliderWrapper.querySelector(nextBtn);
@@ -112,7 +131,8 @@ function createSlider(options = {}) {
       ease: "ease-in-out",
     };
 
-    const movement = sliderTrack.animate(keyframes, animationOptions);
+    movement = sliderTrack.animate(keyframes, animationOptions);
+    exposedMovement = movement;
     let updSliderItems = sliderTrack.children;
     currentSlide = parseInt(currentSlide);
 
@@ -135,6 +155,18 @@ function createSlider(options = {}) {
     });
   }
 
+  function cancelMovement() {
+    if (movement instanceof Animation) {
+      movement.cancel();
+    }
+  }
+
+  function correctMovement() {
+    if (movement instanceof Animation) {
+      // To Do
+    }
+  }
+
   function checkNav() {
     if (!infinite) {
       if (currentSlide <= 0) {
@@ -152,8 +184,10 @@ function createSlider(options = {}) {
   }
 
   function updateDOM() {
+    checkResponsive();
     slideCount = sliderItems.length;
     slideWidth = sliderContainer.clientWidth / visibleSlides;
+    maxHeight = 0;
 
     sliderItems.forEach((item, i) => {
       item.setAttribute("data-index", i);
@@ -175,6 +209,12 @@ function createSlider(options = {}) {
     }
 
     checkNav();
+    if (visibleSlides == slideCount) {
+      hideNext();
+      hidePrev();
+      cancelMovement();
+      return;
+    }
   }
 
   function eventHandler(fn) {
@@ -197,5 +237,8 @@ function createSlider(options = {}) {
   navNext.addEventListener("click", () => moveRight());
 
   if (autoplay) setInterval(() => moveRight(), autoplayInterval);
-  window.addEventListener("resize", () => updateDOM());
+  window.addEventListener("resize", () => {
+    updateDOM();
+    correctMovement();
+  });
 }
